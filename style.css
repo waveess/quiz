@@ -16,15 +16,26 @@ body {
 
 h1, h2 {
   text-align: center;
+  color: rgb(15, 15, 16);
 }
 
 form {
   display: flex;
   flex-direction: column;
 }
-
+.title-1{
+  display: flex;
+  width: 50vw;
+  font-size: 24px;
+}
+#quiz-title{
+  width: 51%;
+  padding: 10px;
+  border-color: rgb(134, 105, 209);
+}
 .question-item {
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .question-item label {
@@ -34,10 +45,10 @@ form {
 
 .question-item input[type="text"],
 .question-item input[type="file"] {
-  width: 100%;
+  width: 50%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   border-radius: 5px;
 }
 
@@ -52,7 +63,7 @@ form {
 
 button {
   padding: 10px;
-  background: #007BFF;
+  background: #8c55b5;
   color: white;
   border: none;
   border-radius: 5px;

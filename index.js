@@ -1,82 +1,117 @@
-const quizData = [
-    {
-      question: "What's your favorite cuisine?",
-      options: ["Italian", "Mexican", "Japanese", "Indian"],
-    },
-    {
-      question: "What's your go-to comfort food?",
-      options: ["Pizza", "Tacos", "Ramen", "Curry"],
-    },
-    {
-      question: "What's your favorite dessert?",
-      options: ["Tiramisu", "Churros", "Mochi", "Ice Cream"],
-    },
-  ];
+document.addEventListener('DOMContentLoaded', function() {
+  const maxQuestions = 6;
+  let questionCount = 1;
 
-  const foodieTypes = [
-    { type: "Casual Foodie", image: "https://www.nrn.com/sites/nrn.com/files/Food_1.jpeg" },
-    { type: "Adventurous Foodie", image: "https://hashtagcoloradolife.com/wp-content/uploads/2019/08/cooking-smores-camping.png" },
-    { type: "Gourmet Foodie", image: "https://www.discoveryvillages.com/wp-content/uploads/2022/05/7-benefits-of-gourmet-meals-for-your.jpg" },
-    { type: "Food Connoisseur", image: "https://media3.giphy.com/media/PZAh5BdoD8Vlm/200w.gif?cid=6c09b952gn9p62msozj6jd94raxax6i2g89v529hhbbit2iv&ep=v1_gifs_search&rid=200w.gif&ct=g" },
-  ];
+  const quizForm = document.getElementById('quiz-form');
+  const addQuestionButton = document.getElementById('add-question');
+  const questionsContainer = document.getElementById('questions-container');
+  const quizzesContainer = document.getElementById('quizzes-container');
 
-  const questionElement = document.getElementById("question");
-  const optionsElement = document.getElementById("options");
-  const nextButton = document.getElementById("nextButton");
-  const resultElement = document.getElementById("result");
+  addQuestionButton.addEventListener('click', function() {
+      if (questionCount < maxQuestions) {
+          questionCount++;
+          const questionItem = document.createElement('div');
+          questionItem.classList.add('question-item');
+          questionItem.innerHTML = `
+              <label>Question ${questionCount}</label>
+              <input type="text" class="question-text" placeholder="Enter your question" required>
+              <input type="file" class="question-image" accept="image/*">
+              <div class="options-container">
+                  <input type="text" class="option-text" placeholder="Option 1" required>
+                  <input type="text" class="result-text" placeholder="Result for Option 1" required>
+                  <input type="text" class="option-text" placeholder="Option 2" required>
+                  <input type="text" class="result-text" placeholder="Result for Option 2" required>
+                  <input type="text" class="option-text" placeholder="Option 3">
+                  <input type="text" class="result-text" placeholder="Result for Option 3">
+                  <input type="text" class="option-text" placeholder="Option 4">
+                  <input type="text" class="result-text" placeholder="Result for Option 4">
+              </div>
+          `;
+          questionsContainer.appendChild(questionItem);
+      } else {
+          alert('You can only add up to 6 questions.');
+      }
+  });
 
-  let currentQuestion = 0;
-  let score = 0;
+  quizForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const questions = [];
+      document.querySelectorAll('.question-item').forEach(item => {
+          const questionText = item.querySelector('.question-text').value;
+          const questionImage = item.querySelector('.question-image').files[0];
+          const questionImageUrl = questionImage ? URL.createObjectURL(questionImage) : '';
+          const options = Array.from(item.querySelectorAll('.option-text')).map((option, index) => ({
+              text: option.value,
+              result: item.querySelectorAll('.result-text')[index].value
+          })).filter(option => option.text);
+          questions.push({ text: questionText, image: questionImageUrl, options: options });
+      });
 
-  function loadQuestion() {
-    const currentQuizData = quizData[currentQuestion];
-    questionElement.innerText = currentQuizData.question;
-    optionsElement.innerHTML = "";
-    currentQuizData.options.forEach((option) => {
-      const button = document.createElement("button");
-      button.innerText = option;
-      button.classList.add("optionButton");
-      button.addEventListener("click", () => checkAnswer(option));
-      optionsElement.appendChild(button);
-    });
-  }
+      const quiz = document.createElement('div');
+      quiz.classList.add('quiz');
+      quiz.innerHTML = `
+          <h3>Quiz ${quizzesContainer.childElementCount + 1}</h3>
+          ${questions.map((q, questionIndex) => `
+              <div class="question">
+                  <p>${q.text}</p>
+                  ${q.image ? `<img src="${q.image}" alt="Question Image">` : ''}
+                  ${q.options.map((option, optionIndex) => `
+                      <div class="option">
+                          <input type="radio" name="question-${questionIndex}" value="${option.result}" id="option-${questionIndex}-${optionIndex}">
+                          <label for="option-${questionIndex}-${optionIndex}">${option.text}</label>
+                      </div>
+                  `).join('')}
+              </div>
+          `).join('')}
+          <button type="button" class="submit-quiz">Submit Quiz</button>
+      `;
+      quizzesContainer.appendChild(quiz);
+      quizForm.reset();
+      questionCount = 1;
+      questionsContainer.innerHTML = `
+          <div class="question-item">
+              <label>Question 1</label>
+              <input type="text" class="question-text" placeholder="Enter your question" required>
+              <input type="file" class="question-image" accept="image/*">
+              <div class="options-container">
+                  <input type="text" class="option-text" placeholder="Option 1" required>
+                  <input type="text" class="result-text" placeholder="Result for Option 1" required>
+                  <input type="text" class="option-text" placeholder="Option 2" required>
+                  <input type="text" class="result-text" placeholder="Result for Option 2" required>
+                  <input type="text" class="option-text" placeholder="Option 3">
+                  <input type="text" class="result-text" placeholder="Result for Option 3">
+                  <input type="text" class="option-text" placeholder="Option 4">
+                  <input type="text" class="result-text" placeholder="Result for Option 4">
+              </div>
+          </div>
+      `;
+  });
 
-  function checkAnswer(selectedOption) {
-    const currentQuizData = quizData[currentQuestion];
-    if (selectedOption === currentQuizData.options[0]) {
-      score += 25;
-    }
-    currentQuestion++;
-    if (currentQuestion < quizData.length) {
-      loadQuestion();
-    } else {
-      showResult();
-    }
-  }
+  quizzesContainer.addEventListener('click', function(event) {
+      if (event.target.classList.contains('submit-quiz')) {
+          const quizElement = event.target.parentElement;
+          const selectedOptions = Array.from(quizElement.querySelectorAll('input[type="radio"]:checked'));
+          const resultCounts = {};
 
-  function showResult() {
-    questionElement.style.display = "none";
-    optionsElement.style.display = "none";
-    nextButton.style.display = "none";
-    const foodieType = calculateFoodieType(score);
-    const foodieTypeObj = foodieTypes.find((type) => type.type === foodieType);
-    resultElement.innerHTML = `
-      <h2>Your Score: ${score}</h2>
-      <h3>You are a ${foodieType}!</h3>
-      <img src="${foodieTypeObj.image}" alt="${foodieType}" width="200">
-    `;
-  }
+          selectedOptions.forEach(option => {
+              const result = option.value;
+              resultCounts[result] = (resultCounts[result] || 0) + 1;
+          });
 
-  function calculateFoodieType(score) {
-    if (score <= 25) {
-      return "Casual Foodie";
-    } else if (score <= 50) {
-      return "Adventurous Foodie";
-    } else if (score <= 75) {
-      return "Gourmet Foodie";
-    } else {
-      return "Food Connoisseur";
-    }
-  }
+          let finalResult = '';
+          let maxCount = 0;
+          for (const result in resultCounts) {
+              if (resultCounts[result] > maxCount) {
+                  maxCount = resultCounts[result];
+                  finalResult = result;
+              }
+          }
 
-  loadQuestion();
+          const resultElement = document.createElement('p');
+          resultElement.classList.add('result');
+          resultElement.innerText = `Your result: ${finalResult}`;
+          quizElement.appendChild(resultElement);
+          event.target.remove();
+      }
+  });
+});

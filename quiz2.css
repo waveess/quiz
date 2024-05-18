@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    background-image:url('https://media.istockphoto.com/id/1371944452/vector/orange-presentation-template-background.jpg?s=612x612&w=0&k=20&c=XQpdDMmuwcJVUVUxmCnkz2DBrbRhM_AdFFalPK1f1Yk=');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

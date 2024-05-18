@@ -1,33 +1,98 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-  }
-  .container {
-    max-width: 600px;
-    margin: 50px auto;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  h1 {
-    text-align: center;
-  }
-  .optionButton {
-    display: block;
-    margin: 10px auto;
-    width: 20%;
-    padding: 15px 20px;
-    background-color: #bd8ddb;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .optionButton:hover {
-    background-color: #884093;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-item {
+  margin-bottom: 20px;
+}
+
+.question-item label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.question-item input[type="text"],
+.question-item input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-text, .result-text {
+  margin-bottom: 5px;
+}
+
+button {
+  padding: 10px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#quizzes-container {
+  margin-top: 20px;
+}
+
+.quiz {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.quiz h3 {
+  margin-top: 0;
+}
+
+.quiz img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.option {
+  margin: 5px 0;
+}
+
+.result {
+  font-weight: bold;
+}
